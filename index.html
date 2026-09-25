@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <title>Seamless Carousel</title>
+  <link rel="stylesheet" href="css/panel.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div>
+        <h1>Seamless Carousel</h1>
+        <p>Design once. Swipe without seams.</p>
+      </div>
+      <button class="icon-button" id="helpButton" title="Quick help" aria-label="Quick help">?</button>
+    </header>
+
+    <section class="hero-card">
+      <div class="hero-copy">
+        <span class="eyebrow">LIVE CANVAS</span>
+        <strong id="canvasSummary">5,400 × 1,350 px</strong>
+      </div>
+      <div class="mini-carousel" id="miniCarousel" aria-label="Carousel preview"></div>
+      <div class="hero-meta">
+        <span id="ratioSummary">4:5 portrait</span>
+        <span id="slideSummary">5 slides</span>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="Panel sections">
+      <button class="tab is-active" data-tab="create">Create</button>
+      <button class="tab" data-tab="prepare">Prepare</button>
+      <button class="tab" data-tab="export">Export</button>
+    </nav>
+
+    <section class="tab-panel is-active" data-panel="create">
+      <div class="section-heading">
+        <div><span class="step">01</span><h2>Format</h2></div>
+        <span class="hint">Instagram ready</span>
+      </div>
+      <div class="preset-grid" id="presetGrid">
+        <button class="preset" data-width="1080" data-height="1080" data-name="Square"><span class="ratio-icon square"></span><b>Square</b><small>1:1 · 1080</small></button>
+        <button class="preset is-selected" data-width="1080" data-height="1350" data-name="Portrait"><span class="ratio-icon portrait"></span><b>Portrait</b><small>4:5 · 1350</small></button>
+        <button class="preset" data-width="1080" data-height="1920" data-name="Story"><span class="ratio-icon story"></span><b>Story</b><small>9:16 · 1920</small></button>
+      </div>
+
+      <div class="section-heading compact">
+        <div><span class="step">02</span><h2>Slides</h2></div>
+        <output id="slideCountOutput">5</output>
+      </div>
+      <div class="range-wrap">
+        <input type="range" id="slideCount" min="2" max="20" value="5">
+        <div class="range-labels"><span>2</span><span>20</span></div>
+      </div>
+
+      <details class="advanced">
+        <summary>Advanced settings <span>⌄</span></summary>
+        <div class="advanced-body">
+          <div class="field-row">
+            <label>Slide width<input id="slideWidth" type="number" min="320" max="10000" step="1" value="1080"></label>
+            <label>Slide height<input id="slideHeight" type="number" min="320" max="10000" step="1" value="1350"></label>
+          </div>
+          <div class="field-row">
+            <label>Resolution<input id="resolution" type="number" min="72" max="600" value="72"><span class="suffix">ppi</span></label>
+            <label>Safe margin<input id="safeMargin" type="number" min="0" max="500" value="96"><span class="suffix">px</span></label>
+          </div>
+          <label class="color-field">Background<input id="background" type="color" value="#12141a"><span id="colorValue">#12141A</span></label>
+          <div class="guide-color-section">
+            <div class="guide-color-heading"><span>Boundary guide colors</span><small>One color per divider</small></div>
+            <div class="guide-color-list" id="boundaryColors"></div>
+            <label class="guide-safe-color"><span>Safe-area guides</span><input id="safeGuideColor" type="color" value="#FF9F43"><b id="safeGuideColorValue">#FF9F43</b></label>
+          </div>
+          <div class="toggle-row"><span>Safe-area guides</span><label class="switch"><input id="safeGuides" type="checkbox" checked><span></span></label></div>
+          <div class="toggle-row"><span>Slide groups & labels</span><label class="switch"><input id="slideGroups" type="checkbox" checked><span></span></label></div>
+        </div>
+      </details>
+
+      <button class="primary-action" id="createButton"><span>Create carousel document</span><kbd>↵</kbd></button>
+      <button class="secondary-action update-action" id="updateButton">
+        <span class="update-glyph" aria-hidden="true">↻</span>
+        <span><b>Update current carousel</b><small>Resize canvas and refresh guides without scaling artwork</small></span>
+        <kbd>U</kbd>
+      </button>
+      <button class="secondary-action" id="quickExportButton">
+        <span class="export-glyph" aria-hidden="true">⇩</span>
+        <span><b>Export slides separately</b><small>Save every panel as its own image</small></span>
+        <kbd>E</kbd>
+      </button>
+    </section>
+
+    <section class="tab-panel" data-panel="prepare">
+      <div class="empty-icon"><span></span><span></span><span></span></div>
+      <h2>Prepare your canvas</h2>
+      <p>Add clean slide boundaries and optional safe-area guides to the active Photoshop document.</p>
+      <div class="info-card"><b>Non-destructive</b><span>Artwork and layers stay untouched. Only guides are added.</span></div>
+      <label class="check-row"><input type="checkbox" id="replaceGuides" checked><span>Replace existing guides</span></label>
+      <button class="primary-action" id="guidesButton"><span>Add carousel guides</span><kbd>G</kbd></button>
+    </section>
+
+    <section class="tab-panel" data-panel="export">
+      <div class="section-heading"><div><span class="step">03</span><h2>Export slides</h2></div><span class="hint">Choose a folder</span></div>
+      <div class="export-format" role="group" aria-label="Export format">
+        <button class="format-button" data-format="PNG">PNG</button>
+        <button class="format-button is-selected" data-format="JPG">JPG</button>
+      </div>
+      <label class="quality-field" id="qualityField">JPEG quality <output id="qualityOutput">90</output><input id="quality" type="range" min="20" max="100" value="90"></label>
+      <label class="text-field">Filename prefix<input id="filenamePrefix" type="text" value="carousel" maxlength="48"></label>
+      <div class="info-card"><b>Pixel-perfect slices</b><span>The active document is duplicated, cropped, exported, and closed for every slide.</span></div>
+      <button class="primary-action" id="exportButton"><span>Export slides separately</span><kbd>E</kbd></button>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><span class="toast-dot"></span><span id="toastText">Ready</span></div>
+  <dialog id="helpDialog">
+    <button class="dialog-close" id="closeHelp" aria-label="Close">×</button>
+    <span class="eyebrow">QUICK START</span>
+    <h2>A seamless workflow</h2>
+    <ol><li>Create one wide document.</li><li>Design across the guide boundaries.</li><li>Export pixel-perfect slides.</li></ol>
+    <p>Find the panel under <b>Window → Extensions (Legacy) → Seamless Carousel</b>.</p>
+  </dialog>
+  <div class="dialog-backdrop" id="dialogBackdrop"></div>
+
+  <script src="js/CSInterface.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

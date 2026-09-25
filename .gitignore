@@ -1,0 +1,16 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.tmp
+
+# CEP debug artifacts
+*.log
+node_modules/
+
+# Generated packages
+dist/
+*.zxp
+*.zip
